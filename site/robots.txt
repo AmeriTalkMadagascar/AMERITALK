@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kevino2000.github.io/AMERITALK/sitemap.xml

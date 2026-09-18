@@ -15,15 +15,17 @@ function AppShell() {
   const { hydrated, userProfile } = useAppState();
   const [fontsLoaded] = useFonts(MaterialIcons.font);
   const isAdminRoute = segments[0] === "admin";
+  const isPublicRoute = segments[0] === "about";
 
   if (!fontsLoaded || !hydrated) return null;
-  if (!userProfile && !isAdminRoute) return <FirstAccessScreen />;
+  if (!userProfile && !isAdminRoute && !isPublicRoute) return <FirstAccessScreen />;
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="admin" options={{ headerShown: false }} />
+        <Stack.Screen name="about" options={{ headerShown: false }} />
         <Stack.Screen name="lesson/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="lesson/[id]/test" options={{ headerShown: false }} />
         <Stack.Screen name="academic/[program]" options={{ headerShown: false }} />
