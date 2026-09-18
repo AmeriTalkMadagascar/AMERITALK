@@ -1,53 +1,292 @@
+/**
+ * Post-traitement SEO de l'export web statique (dossier `site/`).
+ *
+ * - remplace le <title> vide généré par Expo Router
+ * - injecte description / canonical / Open Graph / Twitter / JSON-LD
+ * - marque en noindex les pages techniques et les routes dynamiques
+ * - régénère sitemap.xml, robots.txt, 404.html et .nojekyll
+ *
+ * Le script est idempotent : il retire son propre bloc avant de le réécrire,
+ * et il ne touche jamais au reste du <head> (styles, polices, hydratation).
+ *
+ * Usage : node scripts/inject-seo.mjs
+ */
 import fs from "node:fs";
 import path from "node:path";
 
 const siteDir = path.resolve("site");
+const baseUrl = (process.env.SITE_URL ?? "https://kevino2000.github.io/AMERITALK").replace(/\/+$/, "");
+const lang = "fr";
+const ogImage = `${baseUrl}/assets/assets/images/promo-ameritalk.6f35c7806e667258538a80e74c9296ea.png`;
+const today = new Date().toISOString().slice(0, 10);
+
+const siteName = "Ameritalk";
+const defaultDescription =
+  "Ameritalk est une application autonome pour apprendre l’anglais avec des leçons, des exercices et de la pratique orale.";
+
+/** Pages publiques : indexées et listées dans le sitemap. */
 const pages = {
   "index.html": {
     title: "Ameritalk — Apprendre l’anglais simplement",
-    description: "Ameritalk est une application autonome pour apprendre l’anglais avec des leçons, des exercices et de la pratique.",
+    description: defaultDescription,
     type: "website",
-    url: "https://kevino2000.github.io/AMERITALK/",
+    priority: "1.0",
   },
   "about.html": {
     title: "Erica Vazahgasy Fabiola — Fondatrice d’Ameritalk",
-    description: "Erica Vazahgasy Fabiola est la fondatrice d’Ameritalk. Elle habite à Mananara Nord et collabore avec Kevino Totozafy, créateur de Matour Guide Madagascar.",
+    description:
+      "Erica Vazahgasy Fabiola est la fondatrice d’Ameritalk. Elle habite à Mananara Nord et collabore avec Kevino Totozafy, créateur de Matour Guide Madagascar.",
     type: "profile",
-    url: "https://kevino2000.github.io/AMERITALK/about.html",
+    priority: "0.8",
+  },
+  "learn.html": {
+    title: "Leçons d’anglais — Ameritalk",
+    description:
+      "Progressez chapitre par chapitre : salutations, famille, météo, nombres, santé. Chaque leçon combine vocabulaire, audio et exercices.",
+    priority: "0.9",
+  },
+  "practice.html": {
+    title: "Pratiquer l’anglais — Ameritalk",
+    description:
+      "Entraînez-vous à l’oral et à l’écrit avec des sessions de pratique, des exercices guidés et un travail de prononciation.",
+    priority: "0.9",
+  },
+  "practice-pronounce.html": {
+    title: "Prononciation anglaise — Ameritalk",
+    description:
+      "Écoutez un modèle audio, répétez et comparez : l’atelier de prononciation d’Ameritalk aide à corriger l’accent mot par mot.",
+    priority: "0.7",
+  },
+  "kids.html": {
+    title: "Anglais pour enfants — Ameritalk Kids",
+    description:
+      "Des activités ludiques pour les plus jeunes : reconnaître les lettres, les écouter et les retrouver en jouant.",
+    priority: "0.8",
+  },
+  "kids/letters.html": {
+    title: "L’alphabet anglais — Ameritalk Kids",
+    description: "Découvrez les 26 lettres de l’alphabet anglais avec leur prononciation.",
+    priority: "0.6",
+  },
+  "kids/listen-letter.html": {
+    title: "Écoute la lettre — Ameritalk Kids",
+    description: "Un jeu d’écoute pour associer le son d’une lettre anglaise à son écriture.",
+    priority: "0.6",
+  },
+  "kids/find-letter.html": {
+    title: "Trouve la lettre — Ameritalk Kids",
+    description: "Un jeu de reconnaissance visuelle des lettres de l’alphabet anglais.",
+    priority: "0.6",
+  },
+  "progress.html": {
+    title: "Ma progression — Ameritalk",
+    description: "Suivez vos leçons terminées, vos séries de révision et vos scores d’exercices.",
+    priority: "0.5",
   },
 };
 
-const escapeAttr = (value) => value.replaceAll("&", "&amp;").replaceAll('"', "&quot;");
+/** Pages techniques ou dupliquées : noindex, hors sitemap. */
+const isPrivatePage = (rel) =>
+  rel.includes("[") || // routes dynamiques exportées comme fichiers littéraux
+  rel.startsWith("(tabs)/") || // doublons des onglets
+  rel.startsWith("dev/") ||
+  rel.startsWith("oauth/") ||
+  rel === "admin.html" ||
+  rel === "test-voice.html" ||
+  rel === "_sitemap.html" ||
+  rel === "+not-found.html" ||
+  rel === "404.html" ||
+  rel.startsWith("google"); // fichier de vérification Search Console
 
-for (const [file, data] of Object.entries(pages)) {
-  const filePath = path.join(siteDir, file);
-  if (!fs.existsSync(filePath)) continue;
-  let html = fs.readFileSync(filePath, "utf8");
-  const structuredData = file === "about.html"
-    ? {
-        "@context": "https://schema.org",
-        "@type": "ProfilePage",
-        name: data.title,
-        description: data.description,
-        url: data.url,
-        mainEntity: {
-          "@type": "Person",
-          name: "Erica Vazahgasy Fabiola",
-          jobTitle: "Fondatrice d’Ameritalk",
-          homeLocation: { "@type": "Place", name: "Mananara Nord" },
-          worksFor: { "@type": "Organization", name: "Ameritalk" },
-          sameAs: ["https://matourguidemadagascar.com"],
-        },
-      }
-    : {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        name: "Ameritalk",
-        applicationCategory: "EducationalApplication",
-        description: data.description,
-        url: data.url,
-      };
-  const head = `<title>${data.title}</title><meta name="description" content="${escapeAttr(data.description)}"><link rel="canonical" href="${data.url}"><meta property="og:title" content="${escapeAttr(data.title)}"><meta property="og:description" content="${escapeAttr(data.description)}"><meta property="og:type" content="${data.type}"><meta property="og:url" content="${data.url}"><meta name="twitter:card" content="summary"><script type="application/ld+json">${JSON.stringify(structuredData)}</script>`;
-  html = html.replace(/<title[^>]*>[\s\S]*?<\/script>/, head);
-  fs.writeFileSync(filePath, html);
+const escapeAttr = (value) =>
+  String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;");
+
+const canonicalFor = (rel) => (rel === "index.html" ? `${baseUrl}/` : `${baseUrl}/${rel}`);
+
+function structuredData(rel, data, url) {
+  if (rel === "about.html") {
+    return {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      name: data.title,
+      description: data.description,
+      url,
+      mainEntity: {
+        "@type": "Person",
+        name: "Erica Vazahgasy Fabiola",
+        jobTitle: "Fondatrice d’Ameritalk",
+        homeLocation: { "@type": "Place", name: "Mananara Nord" },
+        worksFor: { "@type": "Organization", name: siteName },
+        sameAs: ["https://matourguidemadagascar.com"],
+      },
+    };
+  }
+  if (rel === "index.html") {
+    return {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: siteName,
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "Web, Android",
+      inLanguage: "fr",
+      description: data.description,
+      url,
+      image: ogImage,
+    };
+  }
+  return null;
 }
+
+function buildHead(rel, data) {
+  const url = canonicalFor(rel);
+  const tags = [
+    `<title>${escapeAttr(data.title)}</title>`,
+    `<meta name="description" content="${escapeAttr(data.description)}">`,
+  ];
+
+  if (data.noindex) {
+    tags.push('<meta name="robots" content="noindex,follow">');
+  } else {
+    tags.push('<meta name="robots" content="index,follow">');
+    tags.push(`<link rel="canonical" href="${url}">`);
+  }
+
+  tags.push(
+    `<meta property="og:site_name" content="${escapeAttr(siteName)}">`,
+    `<meta property="og:locale" content="fr_FR">`,
+    `<meta property="og:title" content="${escapeAttr(data.title)}">`,
+    `<meta property="og:description" content="${escapeAttr(data.description)}">`,
+    `<meta property="og:type" content="${escapeAttr(data.type ?? "website")}">`,
+    `<meta property="og:url" content="${url}">`,
+    `<meta property="og:image" content="${ogImage}">`,
+    `<meta property="og:image:width" content="1536">`,
+    `<meta property="og:image:height" content="699">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:title" content="${escapeAttr(data.title)}">`,
+    `<meta name="twitter:description" content="${escapeAttr(data.description)}">`,
+    `<meta name="twitter:image" content="${ogImage}">`,
+    `<meta name="theme-color" content="#0B5FFF">`,
+    `<meta name="apple-mobile-web-app-title" content="${escapeAttr(siteName)}">`,
+  );
+
+  const ld = structuredData(rel, data, url);
+  if (ld) tags.push(`<script type="application/ld+json">${JSON.stringify(ld)}</script>`);
+
+  return `<!--seo:start-->${tags.join("")}<!--seo:end-->`;
+}
+
+/** Retire l'ancien bloc SEO (marqué ou non) sans toucher au reste du <head>. */
+function cleanHead(head) {
+  return head
+    .replace(/<!--seo:start-->[\s\S]*?<!--seo:end-->/g, "")
+    .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, "")
+    .replace(
+      /<meta[^>]+(?:name|property)="(?:description|robots|theme-color|apple-mobile-web-app-title|og:[^"]*|twitter:[^"]*)"[^>]*>/gi,
+      "",
+    )
+    .replace(/<link[^>]+rel="canonical"[^>]*>/gi, "")
+    .replace(/<script[^>]+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "");
+}
+
+function listHtmlFiles(dir, prefix = "") {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      if (entry.name === "_expo" || entry.name === "assets") continue;
+      out.push(...listHtmlFiles(path.join(dir, entry.name), rel));
+    } else if (entry.name.endsWith(".html")) {
+      out.push(rel);
+    }
+  }
+  return out;
+}
+
+if (!fs.existsSync(siteDir)) {
+  console.error(`Dossier introuvable : ${siteDir}. Lancez d'abord l'export web.`);
+  process.exit(1);
+}
+
+const files = listHtmlFiles(siteDir).sort();
+let patched = 0;
+
+for (const rel of files) {
+  if (rel === "404.html") continue; // régénéré plus bas
+  const filePath = path.join(siteDir, rel);
+  let html = fs.readFileSync(filePath, "utf8");
+
+  const headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+  if (!headMatch) {
+    console.warn(`  ! <head> introuvable, page ignorée : ${rel}`);
+    continue;
+  }
+
+  const known = pages[rel];
+  const data = {
+    title: known?.title ?? `${siteName} — Apprendre l’anglais`,
+    description: known?.description ?? defaultDescription,
+    type: known?.type,
+    noindex: !known || isPrivatePage(rel),
+  };
+
+  const newHead = buildHead(rel, data) + cleanHead(headMatch[1]);
+  html =
+    html.slice(0, headMatch.index) +
+    `<head>${newHead}</head>` +
+    html.slice(headMatch.index + headMatch[0].length);
+  html = html.replace(
+    /<html([^>]*)>/i,
+    (_m, attrs) => `<html${attrs.replace(/\s*lang="[^"]*"/i, "")} lang="${lang}">`,
+  );
+
+  fs.writeFileSync(filePath, html);
+  patched += 1;
+}
+
+// --- 404.html : GitHub Pages le sert pour toute URL inconnue.
+// On y place une copie de l'app pour que les routes dynamiques
+// (/lesson/3, /chapter/2...) soient prises en charge côté client.
+const indexPath = path.join(siteDir, "index.html");
+if (fs.existsSync(indexPath)) {
+  const notFound = fs
+    .readFileSync(indexPath, "utf8")
+    .replace(/<link[^>]+rel="canonical"[^>]*>/i, "")
+    .replace(/<meta name="robots"[^>]*>/i, '<meta name="robots" content="noindex,follow">');
+  fs.writeFileSync(path.join(siteDir, "404.html"), notFound);
+}
+
+// --- sitemap.xml
+const sitemapEntries = Object.entries(pages)
+  .filter(([rel]) => fs.existsSync(path.join(siteDir, rel)))
+  .map(
+    ([rel, data]) =>
+      `  <url>\n    <loc>${canonicalFor(rel)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${data.priority ?? "0.5"}</priority>\n  </url>`,
+  )
+  .join("\n");
+fs.writeFileSync(
+  path.join(siteDir, "sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`,
+);
+
+// --- robots.txt
+fs.writeFileSync(
+  path.join(siteDir, "robots.txt"),
+  [
+    "User-agent: *",
+    "Allow: /",
+    "Disallow: /admin.html",
+    "Disallow: /dev/",
+    "Disallow: /oauth/",
+    "Disallow: /test-voice.html",
+    "Disallow: /_sitemap.html",
+    "",
+    `Sitemap: ${baseUrl}/sitemap.xml`,
+    "",
+  ].join("\n"),
+);
+
+// --- .nojekyll : évite que GitHub Pages ignore le dossier /_expo/
+fs.writeFileSync(path.join(siteDir, ".nojekyll"), "");
+
+console.log(`SEO injecté dans ${patched} page(s).`);
+console.log(`Générés : 404.html, sitemap.xml, robots.txt, .nojekyll (base : ${baseUrl})`);

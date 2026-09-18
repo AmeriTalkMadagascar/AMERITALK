@@ -1,3 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /dev/
+Disallow: /oauth/
+Disallow: /test-voice.html
+Disallow: /_sitemap.html
+
 Sitemap: https://kevino2000.github.io/AMERITALK/sitemap.xml
