@@ -35,8 +35,8 @@ export default function AboutScreen() {
           <Text style={styles.body}>
             Pour la création du site et de l’application Ameritalk, Erica collabore avec Kevino Totozafy, créateur du site Matour Guide Madagascar.
           </Text>
-          <Link href="https://matourguidemadagascar.com" style={styles.link} target="_blank">
-            Découvrir Matour Guide Madagascar
+          <Link href="https://matourguidemadagascar.com/Kevino.html" style={styles.link} target="_blank">
+            Découvrir Kevino Totozafy
           </Link>
         </View>
         <View style={styles.card}>

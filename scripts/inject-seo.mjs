@@ -117,7 +117,7 @@ function structuredData(rel, data, url) {
         jobTitle: "Fondatrice d’AmeriTalk Madagascar",
         homeLocation: { "@type": "Place", name: "Mananara Nord" },
         worksFor: { "@type": "Organization", name: siteName },
-        sameAs: ["https://matourguidemadagascar.com"],
+        sameAs: ["https://matourguidemadagascar.com/Kevino.html"],
       },
     };
   }
