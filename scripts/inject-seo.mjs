@@ -243,6 +243,15 @@ for (const rel of files) {
     (_m, attrs) => `<html${attrs.replace(/\s*lang="[^"]*"/i, "")} lang="${lang}">`,
   );
 
+  if (rel === "index.html") {
+    html = html
+      .replace(/<!--about-link:start-->[\s\S]*?<!--about-link:end-->/g, "")
+      .replace(
+        /<\/body>/i,
+        '<!--about-link:start--><a href="./about.html" aria-label="À propos d’AmeriTalk Madagascar" style="position:fixed;top:18px;right:18px;z-index:2147483647;padding:10px 15px;border:1px solid #58cc02;border-radius:999px;background:#0f1a22;color:#58cc02;font:800 14px system-ui,sans-serif;text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.3)">À propos</a><!--about-link:end--></body>',
+      );
+  }
+
   fs.writeFileSync(filePath, html);
   patched += 1;
 }
