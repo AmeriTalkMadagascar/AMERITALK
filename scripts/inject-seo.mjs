@@ -111,12 +111,21 @@ function structuredData(rel, data, url) {
       name: data.title,
       description: data.description,
       url,
+      image: `${baseUrl}/assets/assets/images/ceo-ericka.1bf33cc31d12f778e91b30b2394c152f.png`,
       mainEntity: {
         "@type": "Person",
         name: "Ericka Vazahgasy Fabiola",
+        givenName: "Ericka",
+        familyName: "Vazahgasy Fabiola",
         jobTitle: "Fondatrice d’AmeriTalk Madagascar",
-        homeLocation: { "@type": "Place", name: "Mananara Nord" },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Mananara Nord",
+          addressCountry: "MG",
+        },
+        homeLocation: { "@type": "Place", name: "Mananara Nord, Madagascar" },
         worksFor: { "@type": "Organization", name: siteName },
+        knowsAbout: ["Apprentissage de l’anglais", "Éducation", "Madagascar"],
         sameAs: ["https://matourguidemadagascar.com/Kevino.html"],
       },
     };
