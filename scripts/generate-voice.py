@@ -141,7 +141,7 @@ PHRASES = {
     # ---------- Phrases modèles (pour les exercices) ----------
     "model-hello-vanna": "Hello, my name is Vanna.",
     "model-from-mananara": "I am from Mananara Nord.",
-    "model-nice-erica": "Nice to meet you, Erica.",
+    "model-nice-erica": "Nice to meet you, Ericka.",
     "model-study-lycee": "I study at Lycée Mananara Nord.",
     "model-welcome-ameritalk": "Welcome to AmeriTalk!",
     "model-coffee-please": "Could I have a coffee, please?",

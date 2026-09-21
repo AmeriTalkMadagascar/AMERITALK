@@ -79,9 +79,9 @@ const baseLessons: Omit<Lesson, "words" | "phrase" | "translation">[] = [
       },
       {
         id: "1-3",
-        english: "Nice to meet you, Erica.",
-        french: "Enchanté(e), Erica.",
-        tokens: t("Nice to meet you, Erica."),
+        english: "Nice to meet you, Ericka.",
+        french: "Enchanté(e), Ericka.",
+        tokens: t("Nice to meet you, Ericka."),
         focusWord: "nice",
         focusTranslation: "agréable / enchanté(e)",
         focusPhonetic: "/nys/",
@@ -139,12 +139,12 @@ const baseLessons: Omit<Lesson, "words" | "phrase" | "translation">[] = [
       },
     ],
     dialogue: [
-      { speaker: "Erica", text: "Hello! Welcome to AmeriTalk. My name is Erica." },
-      { speaker: "Vanna", text: "Hi Erica! I'm Vanna. Nice to meet you." },
-      { speaker: "Erica", text: "Nice to meet you too. Where are you from?" },
+      { speaker: "Ericka", text: "Hello! Welcome to AmeriTalk. My name is Ericka." },
+      { speaker: "Vanna", text: "Hi Ericka! I'm Vanna. Nice to meet you." },
+      { speaker: "Ericka", text: "Nice to meet you too. Where are you from?" },
       { speaker: "Vanna", text: "I'm from Analampenja. I study at Lycée Mananara Nord." },
-      { speaker: "Fabiola", text: "Welcome Vanna! I'm Fabiola, the Young Teacher here." },
-      { speaker: "Vanna", text: "Nice to meet you, Fabiola!" },
+      { speaker: "Miora", text: "Welcome Vanna! I'm Miora, the Young Teacher here." },
+      { speaker: "Vanna", text: "Nice to meet you, Miora!" },
     ],
     grammar:
       "Pour se présenter : « My name is… » ou « I am… ». Pour dire d'où l'on vient : « I am from… ». Pour poser la question : « What is your name? » et « Where are you from? ». Mananara Nord se prononce « Mananaré Nord ».",
@@ -452,9 +452,9 @@ const baseLessons: Omit<Lesson, "words" | "phrase" | "translation">[] = [
     ],
     dialogue: [
       { speaker: "Rasoa Be", text: "The first results at Sainte-Jeanne-d'Arc are encouraging." },
-      { speaker: "Erica", text: "Although the task is challenging, this approach is promising." },
+      { speaker: "Ericka", text: "Although the task is challenging, this approach is promising." },
       { speaker: "Rasoa Be", text: "I agree. However, we need more data before deciding." },
-      { speaker: "Erica", text: "You're right. From Androkaroka to La Renommée, every student deserves it." },
+      { speaker: "Ericka", text: "You're right. From Androkaroka to La Renommée, every student deserves it." },
       { speaker: "Vanna", text: "Your insight is valuable, Rasoa Be. Thank you for sharing it." },
     ],
     grammar:

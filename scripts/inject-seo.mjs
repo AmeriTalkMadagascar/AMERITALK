@@ -35,9 +35,9 @@ const pages = {
     image: "assets/assets/images/promo-ameritalk.6f35c7806e667258538a80e74c9296ea.png",
   },
   "about.html": {
-    title: "Ericka Vazahgasy Fabiola — Fondatrice d’AmeriTalk Madagascar",
+    title: "Ericka Vazahgasy — Fondateur d’AmeriTalk Madagascar",
     description:
-      "Ericka Vazahgasy Fabiola est la fondatrice d’AmeriTalk Madagascar. Elle habite à Mananara Nord et collabore avec Kevino Totozafy, créateur de Matour Guide Madagascar.",
+      "Ericka Vazahgasy est le fondateur d’AmeriTalk Madagascar. Il habite à Mananara Nord et collabore avec Kevino Totozafy, créateur de Matour Guide Madagascar.",
     type: "profile",
     changefreq: "monthly",
     priority: "0.8",
@@ -126,10 +126,10 @@ function structuredData(rel, data, url) {
       image: `${baseUrl}/assets/assets/images/ceo-ericka.1bf33cc31d12f778e91b30b2394c152f.png`,
       mainEntity: {
         "@type": "Person",
-        name: "Ericka Vazahgasy Fabiola",
+        name: "Ericka Vazahgasy",
         givenName: "Ericka",
-        familyName: "Vazahgasy Fabiola",
-        jobTitle: "Fondatrice d’AmeriTalk Madagascar",
+        familyName: "Vazahgasy",
+        jobTitle: "Fondateur d’AmeriTalk Madagascar",
         address: {
           "@type": "PostalAddress",
           addressLocality: "Mananara Nord",

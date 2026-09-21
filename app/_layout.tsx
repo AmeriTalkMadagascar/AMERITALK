@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 
 import "../global.css";
 import { FirstAccessScreen } from "@/components/first-access-screen";
+import { PermissionGate } from "@/components/permission-gate";
 import { AppStateProvider, useAppState } from "@/lib/app-state";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
@@ -42,7 +43,9 @@ function AppShell() {
 export default function RootLayout() {
   return (
     <AppStateProvider>
-      <AppShell />
+      <PermissionGate>
+        <AppShell />
+      </PermissionGate>
       <StatusBar style="auto" />
     </AppStateProvider>
   );

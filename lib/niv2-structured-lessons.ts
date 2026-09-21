@@ -3278,7 +3278,7 @@ export const niv2StructuredLessons: LessonV2[] = [
             "malagasy": ""
           },
           {
-            "english": "After dating her boyfriend Dan for four years, Erica finally decided to break up with him.",
+            "english": "After dating her boyfriend Dan for four years, Ericka finally decided to break up with him.",
             "malagasy": ""
           },
           {
