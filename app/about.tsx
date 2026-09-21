@@ -7,33 +7,33 @@ export default function AboutScreen() {
   return (
     <>
       <Head>
-        <title>Erica Vazahgasy Fabiola — Fondatrice d’Ameritalk</title>
+        <title>Ericka Vazahgasy Fabiola — Fondatrice d’Ameritalk</title>
         <meta
           name="description"
-          content="Erica Vazahgasy Fabiola est la fondatrice d’Ameritalk, une application dédiée à l’apprentissage de l’anglais."
+          content="Ericka Vazahgasy Fabiola est la fondatrice d’Ameritalk, une application dédiée à l’apprentissage de l’anglais."
         />
-        <meta property="og:title" content="Erica Vazahgasy Fabiola — Fondatrice d’Ameritalk" />
+        <meta property="og:title" content="Ericka Vazahgasy Fabiola — Fondatrice d’Ameritalk" />
         <meta
           property="og:description"
-          content="Découvrez Erica Vazahgasy Fabiola, fondatrice d’Ameritalk, et le projet de l’application d’apprentissage de l’anglais."
+          content="Découvrez Ericka Vazahgasy Fabiola, fondatrice d’Ameritalk, et le projet de l’application d’apprentissage de l’anglais."
         />
         <meta property="og:type" content="profile" />
-        <meta property="profile:first_name" content="Erica" />
+        <meta property="profile:first_name" content="Ericka" />
         <meta property="profile:last_name" content="Vazahgasy Fabiola" />
       </Head>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.hero}>
           <Text style={styles.eyebrow}>À PROPOS D’AMERITALK</Text>
-          <Text style={styles.title}>Erica Vazahgasy Fabiola</Text>
+          <Text style={styles.title}>Ericka Vazahgasy Fabiola</Text>
           <Text style={styles.role}>Fondatrice d’Ameritalk</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.heading}>La fondatrice</Text>
           <Text style={styles.body}>
-            Erica Vazahgasy Fabiola est la fondatrice d’Ameritalk. Elle habite à Mananara Nord et porte le projet d’une application qui rend l’apprentissage de l’anglais plus accessible, pratique et autonome.
+            Ericka Vazahgasy Fabiola est la fondatrice d’Ameritalk. Elle habite à Mananara Nord et porte le projet d’une application qui rend l’apprentissage de l’anglais plus accessible, pratique et autonome.
           </Text>
           <Text style={styles.body}>
-            Pour la création du site et de l’application Ameritalk, Erica collabore avec Kevino Totozafy, créateur du site Matour Guide Madagascar.
+            Pour la création du site et de l’application Ameritalk, Ericka collabore avec Kevino Totozafy, créateur du site Matour Guide Madagascar.
           </Text>
           <Link href="https://matourguidemadagascar.com/Kevino.html" style={styles.link} target="_blank">
             Découvrir Kevino Totozafy

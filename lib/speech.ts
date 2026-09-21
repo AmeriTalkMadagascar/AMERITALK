@@ -125,7 +125,7 @@ const VOICE_FILES: Record<string, number> = {
   // ---------- Phrases modèles ----------
   "Hello, my name is Vanna.": require("@/assets/audio/voice/model-hello-vanna.mp3"),
   "I am from Mananara Nord.": require("@/assets/audio/voice/model-from-mananara.mp3"),
-  "Nice to meet you, Erica.": require("@/assets/audio/voice/model-nice-erica.mp3"),
+  "Nice to meet you, Ericka.": require("@/assets/audio/voice/model-nice-erica.mp3"),
   "I study at Lycée Mananara Nord.": require("@/assets/audio/voice/model-study-lycee.mp3"),
   "Welcome to AmeriTalk!": require("@/assets/audio/voice/model-welcome-ameritalk.mp3"),
   "Could I have a coffee, please?": require("@/assets/audio/voice/model-coffee-please.mp3"),
