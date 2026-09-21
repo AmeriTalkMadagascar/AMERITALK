@@ -15,7 +15,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const siteDir = path.resolve("site");
-const baseUrl = (process.env.SITE_URL ?? "https://kevino2000.github.io/AMERITALK").replace(/\/+$/, "");
+const baseUrl = (process.env.SITE_URL ?? "https://ameritalkmadagascar.github.io/AMERITALK").replace(/\/+$/, "");
 const lang = "fr";
 const ogImage = `${baseUrl}/assets/assets/images/promo-ameritalk.6f35c7806e667258538a80e74c9296ea.png`;
 const today = new Date().toISOString().slice(0, 10);
