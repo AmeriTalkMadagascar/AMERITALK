@@ -289,9 +289,11 @@ if (fs.existsSync(indexPath)) {
   fs.writeFileSync(path.join(siteDir, "404.html"), notFound);
 }
 
+// --- pages publiques existantes (source unique pour sitemap.xml ET sitemap.txt)
+const publishedPages = Object.entries(pages).filter(([rel]) => fs.existsSync(path.join(siteDir, rel)));
+
 // --- sitemap.xml
-const sitemapEntries = Object.entries(pages)
-  .filter(([rel]) => fs.existsSync(path.join(siteDir, rel)))
+const sitemapEntries = publishedPages
   .map(
     ([rel, data]) =>
       `  <url>\n    <loc>${canonicalFor(rel)}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${data.priority ?? "0.5"}</priority>\n  </url>`,
@@ -301,6 +303,11 @@ fs.writeFileSync(
   path.join(siteDir, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`,
 );
+
+// --- sitemap.txt : une URL par ligne, générée à partir des mêmes pages que sitemap.xml
+// (auparavant ce fichier était laissé tel quel dans l'export et pouvait dériver du sitemap.xml réel)
+const sitemapTxtEntries = publishedPages.map(([rel]) => canonicalFor(rel)).join("\n");
+fs.writeFileSync(path.join(siteDir, "sitemap.txt"), `${sitemapTxtEntries}\n`);
 
 // --- robots.txt
 fs.writeFileSync(
@@ -315,6 +322,7 @@ fs.writeFileSync(
     "Disallow: /_sitemap.html",
     "",
     `Sitemap: ${baseUrl}/sitemap.xml`,
+    `Sitemap: ${baseUrl}/sitemap.txt`,
     "",
   ].join("\n"),
 );
@@ -323,4 +331,4 @@ fs.writeFileSync(
 fs.writeFileSync(path.join(siteDir, ".nojekyll"), "");
 
 console.log(`SEO injecté dans ${patched} page(s).`);
-console.log(`Générés : 404.html, sitemap.xml, robots.txt, .nojekyll (base : ${baseUrl})`);
+console.log(`Générés : 404.html, sitemap.xml, sitemap.txt, robots.txt, .nojekyll (base : ${baseUrl})`);
