@@ -30,57 +30,69 @@ const pages = {
     title: "AmeriTalk Madagascar — Apprendre l’anglais simplement",
     description: defaultDescription,
     type: "website",
+    changefreq: "weekly",
     priority: "1.0",
+    image: "assets/assets/images/promo-ameritalk.6f35c7806e667258538a80e74c9296ea.png",
   },
   "about.html": {
     title: "Ericka Vazahgasy Fabiola — Fondatrice d’AmeriTalk Madagascar",
     description:
       "Ericka Vazahgasy Fabiola est la fondatrice d’AmeriTalk Madagascar. Elle habite à Mananara Nord et collabore avec Kevino Totozafy, créateur de Matour Guide Madagascar.",
     type: "profile",
+    changefreq: "monthly",
     priority: "0.8",
+    image: "assets/assets/images/ceo-ericka.1bf33cc31d12f778e91b30b2394c152f.png",
   },
   "learn.html": {
     title: "Leçons d’anglais — AmeriTalk Madagascar",
     description:
       "Progressez chapitre par chapitre : salutations, famille, météo, nombres, santé. Chaque leçon combine vocabulaire, audio et exercices.",
+    changefreq: "weekly",
     priority: "0.9",
   },
   "practice.html": {
     title: "Pratiquer l’anglais — AmeriTalk Madagascar",
     description:
       "Entraînez-vous à l’oral et à l’écrit avec des sessions de pratique, des exercices guidés et un travail de prononciation.",
+    changefreq: "weekly",
     priority: "0.9",
   },
   "practice-pronounce.html": {
     title: "Prononciation anglaise — AmeriTalk Madagascar",
     description:
       "Écoutez un modèle audio, répétez et comparez : l’atelier de prononciation d’Ameritalk aide à corriger l’accent mot par mot.",
+    changefreq: "weekly",
     priority: "0.7",
   },
   "kids.html": {
     title: "Anglais pour enfants — AmeriTalk Madagascar Kids",
     description:
       "Des activités ludiques pour les plus jeunes : reconnaître les lettres, les écouter et les retrouver en jouant.",
+    changefreq: "weekly",
     priority: "0.8",
   },
   "kids/letters.html": {
     title: "L’alphabet anglais — AmeriTalk Madagascar Kids",
     description: "Découvrez les 26 lettres de l’alphabet anglais avec leur prononciation.",
+    changefreq: "monthly",
     priority: "0.6",
   },
   "kids/listen-letter.html": {
     title: "Écoute la lettre — AmeriTalk Madagascar Kids",
     description: "Un jeu d’écoute pour associer le son d’une lettre anglaise à son écriture.",
+    changefreq: "monthly",
     priority: "0.6",
   },
   "kids/find-letter.html": {
     title: "Trouve la lettre — AmeriTalk Madagascar Kids",
     description: "Un jeu de reconnaissance visuelle des lettres de l’alphabet anglais.",
+    changefreq: "monthly",
     priority: "0.6",
   },
   "progress.html": {
     title: "Ma progression — AmeriTalk Madagascar",
     description: "Suivez vos leçons terminées, vos séries de révision et vos scores d’exercices.",
+    changefreq: "weekly",
     priority: "0.5",
   },
 };
@@ -282,12 +294,12 @@ const sitemapEntries = Object.entries(pages)
   .filter(([rel]) => fs.existsSync(path.join(siteDir, rel)))
   .map(
     ([rel, data]) =>
-      `  <url>\n    <loc>${canonicalFor(rel)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${data.priority ?? "0.5"}</priority>\n  </url>`,
+      `  <url>\n    <loc>${canonicalFor(rel)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${data.changefreq ?? "monthly"}</changefreq>\n    <priority>${data.priority ?? "0.5"}</priority>${data.image ? `\n    <image:image>\n      <image:loc>${baseUrl}/${data.image}</image:loc>\n    </image:image>` : ""}\n  </url>`,
   )
   .join("\n");
 fs.writeFileSync(
   path.join(siteDir, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${sitemapEntries}\n</urlset>\n`,
 );
 
 // --- robots.txt
