@@ -142,6 +142,9 @@ function buildHead(rel, data) {
   const tags = [
     `<title>${escapeAttr(data.title)}</title>`,
     `<meta name="description" content="${escapeAttr(data.description)}">`,
+    `<link rel="icon" href="${baseUrl}/favicon.ico">`,
+    `<link rel="icon" type="image/png" sizes="32x32" href="${baseUrl}/favicon-32.png">`,
+    `<link rel="apple-touch-icon" href="${baseUrl}/apple-touch-icon.png">`,
   ];
 
   if (data.noindex) {
@@ -185,6 +188,7 @@ function cleanHead(head) {
       "",
     )
     .replace(/<link[^>]+rel="canonical"[^>]*>/gi, "")
+    .replace(/<link[^>]+rel="(?:icon|apple-touch-icon)"[^>]*>/gi, "")
     .replace(/<script[^>]+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "");
 }
 
