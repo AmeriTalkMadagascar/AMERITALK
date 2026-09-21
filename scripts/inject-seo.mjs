@@ -163,6 +163,7 @@ function buildHead(rel, data) {
   const tags = [
     `<title>${escapeAttr(data.title)}</title>`,
     `<meta name="description" content="${escapeAttr(data.description)}">`,
+    ...(rel === "index.html" ? ['<meta name="google-site-verification" content="google9664bfac52c3075d.html">'] : []),
     `<link rel="icon" href="${baseUrl}/favicon.ico">`,
     `<link rel="icon" type="image/png" sizes="32x32" href="${baseUrl}/favicon-32.png">`,
     `<link rel="apple-touch-icon" href="${baseUrl}/apple-touch-icon.png">`,
@@ -208,6 +209,7 @@ function cleanHead(head) {
       /<meta[^>]+(?:name|property)="(?:description|robots|theme-color|apple-mobile-web-app-title|og:[^"]*|twitter:[^"]*)"[^>]*>/gi,
       "",
     )
+    .replace(/<meta[^>]+name="google-site-verification"[^>]*>/gi, "")
     .replace(/<link[^>]+rel="canonical"[^>]*>/gi, "")
     .replace(/<link[^>]+rel="(?:icon|apple-touch-icon)"[^>]*>/gi, "")
     .replace(/<script[^>]+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "");
