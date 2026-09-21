@@ -7,3 +7,4 @@ Disallow: /test-voice.html
 Disallow: /_sitemap.html
 
 Sitemap: https://ameritalkmadagascar.github.io/AMERITALK/sitemap.xml
+Sitemap: https://ameritalkmadagascar.github.io/AMERITALK/sitemap.txt
