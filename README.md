@@ -29,7 +29,7 @@ repartent avec un `<title>` vide. Le script :
 
 Il est idempotent : on peut le relancer sans dupliquer les balises.
 
-L’URL de base est `https://kevino2000.github.io/AMERITALK` ; elle doit rester cohérente
+L’URL de base est `https://ameritalkmadagascar.github.io/AMERITALK` ; elle doit rester cohérente
 avec `experiments.baseUrl` dans `app.config.ts`. Pour publier ailleurs :
 
 ```bash
