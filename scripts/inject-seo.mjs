@@ -20,66 +20,66 @@ const lang = "fr";
 const ogImage = `${baseUrl}/assets/assets/images/promo-ameritalk.6f35c7806e667258538a80e74c9296ea.png`;
 const today = new Date().toISOString().slice(0, 10);
 
-const siteName = "Ameritalk";
+const siteName = "AmeriTalk Madagascar";
 const defaultDescription =
-  "Ameritalk est une application autonome pour apprendre l’anglais avec des leçons, des exercices et de la pratique orale.";
+  "AmeriTalk Madagascar est une application autonome pour apprendre l’anglais avec des leçons, des exercices et de la pratique orale.";
 
 /** Pages publiques : indexées et listées dans le sitemap. */
 const pages = {
   "index.html": {
-    title: "Ameritalk — Apprendre l’anglais simplement",
+    title: "AmeriTalk Madagascar — Apprendre l’anglais simplement",
     description: defaultDescription,
     type: "website",
     priority: "1.0",
   },
   "about.html": {
-    title: "Erica Vazahgasy Fabiola — Fondatrice d’Ameritalk",
+    title: "Erica Vazahgasy Fabiola — Fondatrice d’AmeriTalk Madagascar",
     description:
-      "Erica Vazahgasy Fabiola est la fondatrice d’Ameritalk. Elle habite à Mananara Nord et collabore avec Kevino Totozafy, créateur de Matour Guide Madagascar.",
+      "Erica Vazahgasy Fabiola est la fondatrice d’AmeriTalk Madagascar. Elle habite à Mananara Nord et collabore avec Kevino Totozafy, créateur de Matour Guide Madagascar.",
     type: "profile",
     priority: "0.8",
   },
   "learn.html": {
-    title: "Leçons d’anglais — Ameritalk",
+    title: "Leçons d’anglais — AmeriTalk Madagascar",
     description:
       "Progressez chapitre par chapitre : salutations, famille, météo, nombres, santé. Chaque leçon combine vocabulaire, audio et exercices.",
     priority: "0.9",
   },
   "practice.html": {
-    title: "Pratiquer l’anglais — Ameritalk",
+    title: "Pratiquer l’anglais — AmeriTalk Madagascar",
     description:
       "Entraînez-vous à l’oral et à l’écrit avec des sessions de pratique, des exercices guidés et un travail de prononciation.",
     priority: "0.9",
   },
   "practice-pronounce.html": {
-    title: "Prononciation anglaise — Ameritalk",
+    title: "Prononciation anglaise — AmeriTalk Madagascar",
     description:
       "Écoutez un modèle audio, répétez et comparez : l’atelier de prononciation d’Ameritalk aide à corriger l’accent mot par mot.",
     priority: "0.7",
   },
   "kids.html": {
-    title: "Anglais pour enfants — Ameritalk Kids",
+    title: "Anglais pour enfants — AmeriTalk Madagascar Kids",
     description:
       "Des activités ludiques pour les plus jeunes : reconnaître les lettres, les écouter et les retrouver en jouant.",
     priority: "0.8",
   },
   "kids/letters.html": {
-    title: "L’alphabet anglais — Ameritalk Kids",
+    title: "L’alphabet anglais — AmeriTalk Madagascar Kids",
     description: "Découvrez les 26 lettres de l’alphabet anglais avec leur prononciation.",
     priority: "0.6",
   },
   "kids/listen-letter.html": {
-    title: "Écoute la lettre — Ameritalk Kids",
+    title: "Écoute la lettre — AmeriTalk Madagascar Kids",
     description: "Un jeu d’écoute pour associer le son d’une lettre anglaise à son écriture.",
     priority: "0.6",
   },
   "kids/find-letter.html": {
-    title: "Trouve la lettre — Ameritalk Kids",
+    title: "Trouve la lettre — AmeriTalk Madagascar Kids",
     description: "Un jeu de reconnaissance visuelle des lettres de l’alphabet anglais.",
     priority: "0.6",
   },
   "progress.html": {
-    title: "Ma progression — Ameritalk",
+    title: "Ma progression — AmeriTalk Madagascar",
     description: "Suivez vos leçons terminées, vos séries de révision et vos scores d’exercices.",
     priority: "0.5",
   },
@@ -114,7 +114,7 @@ function structuredData(rel, data, url) {
       mainEntity: {
         "@type": "Person",
         name: "Erica Vazahgasy Fabiola",
-        jobTitle: "Fondatrice d’Ameritalk",
+        jobTitle: "Fondatrice d’AmeriTalk Madagascar",
         homeLocation: { "@type": "Place", name: "Mananara Nord" },
         worksFor: { "@type": "Organization", name: siteName },
         sameAs: ["https://matourguidemadagascar.com"],
