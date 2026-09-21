@@ -294,12 +294,12 @@ const sitemapEntries = Object.entries(pages)
   .filter(([rel]) => fs.existsSync(path.join(siteDir, rel)))
   .map(
     ([rel, data]) =>
-      `  <url>\n    <loc>${canonicalFor(rel)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${data.changefreq ?? "monthly"}</changefreq>\n    <priority>${data.priority ?? "0.5"}</priority>${data.image ? `\n    <image:image>\n      <image:loc>${baseUrl}/${data.image}</image:loc>\n    </image:image>` : ""}\n  </url>`,
+      `  <url>\n    <loc>${canonicalFor(rel)}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${data.priority ?? "0.5"}</priority>\n  </url>`,
   )
   .join("\n");
 fs.writeFileSync(
   path.join(siteDir, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${sitemapEntries}\n</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`,
 );
 
 // --- robots.txt
