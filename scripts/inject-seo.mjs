@@ -323,7 +323,6 @@ fs.writeFileSync(
     "Disallow: /test-voice.html",
     "Disallow: /_sitemap.html",
     "",
-    `Sitemap: ${baseUrl}/sitemap.xml`,
     `Sitemap: ${baseUrl}/sitemap.txt`,
     "",
   ].join("\n"),
